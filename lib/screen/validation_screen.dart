@@ -16,6 +16,8 @@ class ValidationScreen extends StatefulWidget {
 }
 
 class _ValidationScreenState extends State<ValidationScreen> {
+  var _formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
@@ -26,35 +28,41 @@ class _ValidationScreenState extends State<ValidationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(appTitle)),
-      body: SizerUtil.deviceType == DeviceType.Mobile
-          ? validationScreen(
-              mobileValidationScreenWidth, mobileValidationScreenHeight)
-          : Row(
-              children: [
-                leftScreen(),
-                rightScreen(),
-              ],
-            ),
+    return Form(
+      key: _formKey,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(title: Text(appTitle, style: TextStyle(fontSize: fontSize),)),
+        body: SizerUtil.deviceType == DeviceType.Mobile
+            ? validationScreen(
+                mobileValidationScreenWidth, mobileValidationScreenHeight)
+            : Row(
+                children: [
+                  leftScreen(),
+                  rightScreen(),
+                ],
+              ),
+      ),
     );
   }
 
   void validate() async {
-    if (!_phoneStore.isLoading) {
-      int status = await _phoneStore.validatePhoneNumber();
-      if (status == 404) {
-        ///Fail
-        showPopupDialog(validationErrorTitle, validationErrorContent,
-            popUpDialogueConfirmButton);
-      } else {
-        ///Success
-        if (_phoneStore.isExisted) {
-          showPopupDialog(validationExistedTitle, validationExistedContent,
+    if(_formKey.currentState.validate()){
+      if (!_phoneStore.isLoading) {
+        int status = await _phoneStore.validatePhoneNumber();
+        if (status == 404) {
+          ///Fail
+          showPopupDialog(validationErrorTitle, validationErrorContent,
               popUpDialogueConfirmButton);
         } else {
-          showPopupDialog(validationSuccessTitle, validationSuccessContent,
-              popUpDialogueConfirmButton);
+          ///Success
+          if (_phoneStore.isExisted) {
+            showPopupDialog(validationExistedTitle, validationExistedContent,
+                popUpDialogueConfirmButton);
+          } else {
+            showPopupDialog(validationSuccessTitle, validationSuccessContent,
+                popUpDialogueConfirmButton);
+          }
         }
       }
     }
@@ -121,6 +129,7 @@ class _ValidationScreenState extends State<ValidationScreen> {
 
   SizedBox dropdownCountryCode(double width, double height) {
     return SizedBox(
+      key: Key("dropdownCountryCode"),
       width: width,
       height: height,
       child: DropDownField(
@@ -137,6 +146,7 @@ class _ValidationScreenState extends State<ValidationScreen> {
 
   Center validationButton() {
     return Center(
+      key: Key('validationButton'),
       child: Padding(
         padding: buttonPadding,
         child: SizedBox(
@@ -153,6 +163,7 @@ class _ValidationScreenState extends State<ValidationScreen> {
 
   SizedBox phoneNumberTextField(double width, double height) {
     return SizedBox(
+      key: Key("phoneNumberInput"),
       width: width,
       height: height,
       child: TextFormField(
@@ -160,12 +171,19 @@ class _ValidationScreenState extends State<ValidationScreen> {
         onChanged: (String value) => _phoneStore.setPhoneNumber(value),
         decoration: InputDecoration(
             border: UnderlineInputBorder(), labelText: phoneNumberLabel),
+        keyboardType: TextInputType.phone,
+        validator: (value){
+          if(value.isEmpty){
+            return phoneNumberTextFieldWarning;
+          }
+        },
       ),
     );
   }
 
   Center listButton() {
     return Center(
+      key: Key("listButton"),
       child: Padding(
         padding: buttonPadding,
         child: SizedBox(
@@ -221,6 +239,7 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(validatedListPageAppTitle),
       ),

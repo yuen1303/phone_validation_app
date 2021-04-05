@@ -17,7 +17,7 @@ var mobileValidationScreenHeight = 55.0.h;
 var tabletFlexRightScreenRatio = 2;
 var tabletFlexLeftScreenRatio = 3;
 var tabletValidationScreenWidth = 30.0.w;
-var tabletValidationScreenHeight = 50.0.h;
+var tabletValidationScreenHeight = 60.0.h;
 
 //size for button
 var buttonWidthRatio = 40.0.w;
@@ -25,3 +25,6 @@ var buttonHeightRatio = 5.0.h;
 
 //padding
 var buttonPadding = EdgeInsets.all(8.0);
+
+var fontSize = 10.0.sp;
+

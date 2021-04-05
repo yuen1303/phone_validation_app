@@ -17,3 +17,7 @@ var validationButtonText = "Validate";
 var listButtonText = "list of saved numbers";
 
 var validatedListPageAppTitle = "Validated Phone Numbers";
+
+var phoneNumberTextFieldWarning = "Phone number should be filled!";
+
+

@@ -23,6 +23,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  dropdownfield:
+  mobx:
+  build_runner:
+  mobx_codegen:
+  flutter_mobx:
+  http:
+  shared_preferences:
+  sizer:
+  flutter_spinkit:
+  flutter_platform_widgets:
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -32,16 +42,10 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  dropdownfield: 1.0.3
-  mobx: ^2.0.0
-  build_runner: ^1.12.2
-  mobx_codegen: ^2.0.0
-  flutter_mobx: ^2.0.0
-  http: ^0.13.1
-  shared_preferences: ^2.0.5
-  sizer: ^1.1.8
-  flutter_spinkit: ^5.0.0
-  flutter_platform_widgets: ^1.1.0
+  flutter_driver:
+    sdk: flutter
+  test: any
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
